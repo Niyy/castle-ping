@@ -13,19 +13,20 @@ public class BaseScript : MonoBehaviour
 	public bool canBeSelected;
 	public float maxDistance;
 	public GameObject armyPref;
-	public string owner;
+	public int owner;
 	public Sprite[] territoryPrefabs;
 	public Sprite[] armyPrefabs;
 
 
 	private LineRenderer lineRend;
 	private BaseUI baseUI;
-	private enum mode{Build, Move, Idle};
-	private mode activeMode;
 	private List<GameObject> armiesOut;
+	private List<GameObject> structuresControlled;
 	private float personalResources;
 	private float timeCounter;
 	private float woodResourceAmount;
+	private float buildMode;
+	public float timeOffset;
 
 	
 	void Start() 
@@ -33,8 +34,8 @@ public class BaseScript : MonoBehaviour
 		lineRend = GetComponent<LineRenderer>();
 		DrawDistanceZoneInitial(new Vector3(maxDistance, 0, 0));
 
-		activeMode = mode.Idle;
 		armiesOut = new List<GameObject>();
+		structuresControlled = new List<GameObject>();
 
 		//Prepare BaseUI script
 		baseUI = GetComponent<BaseUI>();
@@ -46,12 +47,42 @@ public class BaseScript : MonoBehaviour
 	
 	void Update() 
 	{
-		if(timeCounter + 1 <= Time.time)
+		
+	}
+
+
+	public int OpenBaseMenu()
+	{
+		if(selected)
 		{
-			timeCounter = Time.time;
-			GatherResources();
-			//Debug.Log("Resources in " + name + ": " + personalResources);
+			baseUI.OpenBaseMenu(this.GetComponent<BaseScript>());
+			return 1;
 		}
+		else
+		{
+			return 0;
+		}
+	}
+
+
+	public void AddToStructures(GameObject newStruct)
+	{
+		structuresControlled.Add(newStruct);
+	}
+
+
+	public void CloseBaseMenu()
+	{
+		if(selected)
+		{
+			baseUI.CloseBaseMenu();
+		}
+	}
+
+
+	public void ActivateBuildMode()
+	{
+		buildMode = 1;
 	}
 
 
@@ -108,17 +139,14 @@ public class BaseScript : MonoBehaviour
 		}
 		else if(!unitScript.GetOwner().Equals(this.owner))
 		{
-			if(unitScript.GetOwner().Equals("Red"))
+			switch(unitScript.GetOwner())
 			{
-				this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[0];
-			}
-			else if (unitScript.GetOwner().Equals("Neutral"))
-			{
-				this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[1];
-			}
-			else if (unitScript.GetOwner().Equals("Neutral"))
-			{
-				this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[2];
+				case 0: this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[0];
+				break;
+				case 1: this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[1];
+				break;
+				case 2: this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[2];
+				break;
 			}
 
 			ConductInteractionWithUnit(unitCollider);
@@ -126,9 +154,17 @@ public class BaseScript : MonoBehaviour
 	}
 
 
-	private void GatherResources()
+	public float GatherResources()
 	{
-		personalResources += 2.0f;
+		foreach(GameObject structure in structuresControlled)
+		{
+			woodResourceAmount = personalResources = structure.GetComponent<FarmScript>().CollectWood();
+		}
+
+		Debug.Log("Resources in " + name + ": " + personalResources);
+		Debug.Log("structures: " + structuresControlled.Count);
+
+		return woodResourceAmount;
 	}
 
 
@@ -156,12 +192,6 @@ public class BaseScript : MonoBehaviour
 				degree += 1.0f / mag;
 			}
 		}
-	}
-
-
-	public float GatherPersonalResources()
-	{
-		return personalResources;
 	}
 
 
@@ -201,8 +231,14 @@ public class BaseScript : MonoBehaviour
 	}
 
 
-	public string GetOwner()
+	public int GetOwner()
 	{
 		return owner;
+	}
+
+
+	public float getBuildMode()
+	{
+		return buildMode;
 	}
 }

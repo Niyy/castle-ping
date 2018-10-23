@@ -9,7 +9,7 @@ public class ArmyScript : MonoBehaviour
 
 
 	public float speed = 2f;
-	public string owner;
+	public int owner;
 
 
 	private Vector3 destination;
@@ -99,7 +99,7 @@ public class ArmyScript : MonoBehaviour
 	}
 
 
-	public string GetOwner()
+	public int GetOwner()
 	{
 		return owner;
 	}
@@ -129,7 +129,7 @@ public class ArmyScript : MonoBehaviour
 	}
 
 
-	public void SetOwner(string newOwner)
+	public void SetOwner(int newOwner)
 	{
 		owner = newOwner;
 	}

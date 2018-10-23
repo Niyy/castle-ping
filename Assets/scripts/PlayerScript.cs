@@ -7,13 +7,14 @@ public class PlayerScript : MonoBehaviour
 	public GameObject blobPref;
 	public GameObject armyPref;
 	public GameObject armyGuidePref;
+	public GameObject[] buildingPref;
+	public float timeOffset;
 	public int owner;
 
 
 	private GameObject lastDropped;
 	private List<GameObject> builtBases;
 	private int mode;
-	private int modeChange;
 	private float timeModeChanged;
 	private Canvas canvas;
 	private int mouseState;
@@ -23,10 +24,12 @@ public class PlayerScript : MonoBehaviour
 	private ArmyScript currentArmyScript;
 	private GameObject selectedItem;
 	private GameObject itemOn;
+	private Vector3 positionOfBuild;
 	public bool onItem;
 	private bool startSending;
 	private float allResources;
 	private float timeCounter;
+	private float startHold;
 
 	
 	void Start () 
@@ -34,8 +37,6 @@ public class PlayerScript : MonoBehaviour
 		builtBases = new List<GameObject>();
 		canvas = GameObject.FindObjectOfType<Canvas>();
 		mode = 0;
-		modeChange = 2;
-		owner = 0;
 		onItem = false;
 		startSending = false;
 		selectedItem = null;
@@ -56,14 +57,15 @@ public class PlayerScript : MonoBehaviour
 	void Update () 
 	{
 		MovePlayerWithMouse();
-		ChangeMode();
-		ModeCheck();
 
 		SelectItemPlayerOn();
+		ModeCheck();
+
 		CleanSelectedItem();
 
-		if(timeCounter + 1 <= Time.time)
+		if(timeCounter <= Time.time)
 		{
+			timeCounter = Time.time + timeOffset;
 			CollectResources();	
 		}
 	}
@@ -71,20 +73,8 @@ public class PlayerScript : MonoBehaviour
 
 	private void ModeCheck()
 	{
-//		BuildMode();
+		ActivateBuildMode();
 		MoveUnitFromBase();
-	}
-
-
-	private void ChangeMode()
-	{
-		if(Input.GetKeyDown(KeyCode.B))
-		{
-			mode = 1;
-			armyGuide = Instantiate(armyGuidePref, GetMousePos(), Quaternion.identity);
-			armyGuide.GetComponent<SpriteRenderer>().sprite = selectedItem.GetComponent<SpriteRenderer>().sprite;
-			Debug.Log("Build mode");
-		}
 	}
 
 
@@ -128,41 +118,54 @@ public class PlayerScript : MonoBehaviour
 	}
 
 
-	/*private void BuildMode()
+	private void ActivateBuildMode()
 	{
-		if(selectedItem)
+		if(Input.GetMouseButtonDown(1))
 		{
-			if(selectedItem && mode == 1)
-			{
-				armyGuide.transform.position = GetMousePos();
-				if(selectedItem)
-				{
-					selectedItem.GetComponent<BaseScript>().DrawDistanceZone(GetMousePos());
-				}
-				else
-				{
-					selectedItem.GetComponent<BaseScript>().ResetDrawing();
-				}
-			}
+			startHold = Time.time;
+		}
+		else if (Input.GetMouseButtonUp(1) && Time.time - startHold > 0.50f)
+		{
+			positionOfBuild = GetMousePos();
+			mode = 1;
+			this.GetComponent<PlayerUI>().OpenBuildMenu(GetMousePos());
+		}
+	}
 
-			if(Input.GetMouseButtonDown(1) && mode == 1 && allResources >= 100 &&
-			(builtBases.Count <= 0 || 
-			(selectedItem && Vector3.Distance(GetMousePos(), selectedItem.transform.position) < maxDis
-			&& Vector3.Distance(GetMousePos(), selectedItem.transform.position) > 0.64f)))
+
+	public void Build(int building)
+	{
+		if(mode == 1)
+		{
+			GameObject chosenBase;
+			if((chosenBase = CheckDistanceFromBuiltBases()))
 			{
-				builtBases.Add(Instantiate(blobPref, GetMousePos(), Quaternion.identity));
-				builtBases[builtBases.Count-1].name = "base-" +owner+ (builtBases.Count-1);
+				chosenBase.GetComponent<BaseScript>().AddToStructures(
+					Instantiate(buildingPref[building-1], positionOfBuild, Quaternion.identity));
+
 				mode = 0;
-				Destroy(armyGuide.gameObject);
+				this.GetComponent<PlayerUI>().CleanBuildMenu();
 			}
-			else if(armyGuide && (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(1)))
+			else
 			{
-				Destroy(armyGuide.gameObject);
-				Debug.Log("Distance from selected object: " + Vector3.Distance(GetMousePos(), selectedItem.transform.position));
-				Debug.Log("Resource Need: 100, " + allResources);
+				Debug.Log("Player: Couldn't build.");
 			}
 		}
-	}*/
+	}
+
+
+	private GameObject CheckDistanceFromBuiltBases()
+	{
+		foreach(GameObject aBase in builtBases)
+		{
+			if(Vector3.Distance(aBase.transform.position, positionOfBuild) <= maxDis)
+			{
+				return aBase;
+			}
+		}
+
+		return null;
+	}
 
 
 	private void MovePlayerWithMouse()
@@ -249,9 +252,14 @@ public class PlayerScript : MonoBehaviour
 		if((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && !onItem)
 		{
 			if(curBaseScript)
+			{
+				curBaseScript.CloseBaseMenu();
 				curBaseScript.SetSelected(false);
+			}
 			if(currentArmyScript)
+			{
 				currentArmyScript.SetSelected(false);
+			}
 			
 
 			selectedItem = null;
@@ -265,9 +273,9 @@ public class PlayerScript : MonoBehaviour
 	{
 		foreach(GameObject bases in builtBases)
 		{
-			allResources += base.GetComponent<BaseScript>().GatherPersonalResources();
+			allResources += bases.GetComponent<BaseScript>().GatherResources();
 		}
 
-		//Debug.Log("Resources: " + allResources);
+		Debug.Log("Resources: " + allResources);
 	}
 }

@@ -19,12 +19,7 @@ public class FarmScript : MonoBehaviour
 	
 	void Update () 
 	{
-		if(timeCounter <= Time.time)
-		{
-			CollectWood();
-			timeCounter = Time.time + 5;
-			Debug.Log("Resources in " + name + ": " + wood);
-		}
+		
 	}
 
 
@@ -33,13 +28,13 @@ public class FarmScript : MonoBehaviour
 		if(collider.tag.Equals("Resource") && collider.name.Substring(0, 4).Equals("Tree"))
 		{
 			treeCount++;
-			Debug.Log("Tree Count: " + treeCount);
+			//Debug.Log("Tree Count: " + treeCount);
 		}
 	}
 
 
-	private void CollectWood()
+	public float CollectWood()
 	{
-		wood += treeCount;
+		return treeCount;
 	}
 }

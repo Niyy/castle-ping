@@ -95,10 +95,10 @@ MonoBehaviour:
   canBeSelected: 0
   maxDistance: 5
   armyPref: {fileID: 1802814567276702, guid: 69a433f411346c9418f06c07202c6906, type: 2}
-  owner: Red
+  owner: 0
   territoryPrefabs:
-  - {fileID: 21300000, guid: 9713e76e5010e0e4e9a27415fe937472, type: 3}
   - {fileID: 21300000, guid: e9da3afc59b7e2341a63432984d20649, type: 3}
+  - {fileID: 21300000, guid: 9713e76e5010e0e4e9a27415fe937472, type: 3}
   - {fileID: 21300000, guid: b07effa413fd5204fbab87832bb1cef0, type: 3}
   armyPrefabs:
   - {fileID: 21300000, guid: 03f0e6115ec79a6448ccab5c2ac82fb9, type: 3}
@@ -116,6 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armyHoldButton: {fileID: 1884620358952604, guid: 38d081a0b9355264a9014e9f0644f4e5,
+    type: 2}
+  baseMenuPref: {fileID: 1884620358952604, guid: 38d081a0b9355264a9014e9f0644f4e5,
     type: 2}
 --- !u!120 &120990686408759424
 LineRenderer:
@@ -175,8 +177,8 @@ LineRenderer:
       m_RotationOrder: 0
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.25778642, g: 0.628, b: 0.245548, a: 1}
-      key1: {r: 0.25778642, g: 0.628, b: 0.245548, a: 1}
+      key0: {r: 0.628, g: 0.24554802, b: 0.24554802, a: 1}
+      key1: {r: 0.628, g: 0.24554802, b: 0.24554802, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

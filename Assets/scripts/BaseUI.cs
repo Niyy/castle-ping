@@ -10,10 +10,12 @@ public class BaseUI : MonoBehaviour
 
 
 	public GameObject armyHoldButton;
+	public GameObject baseMenuPref;
 
 
 	private Canvas canvas;
 	private List<GameObject> basedArmies;
+	private GameObject baseMenu;
 	private int room;
 	private float currentTheta;
 
@@ -21,6 +23,7 @@ public class BaseUI : MonoBehaviour
 	public void Start()
 	{
 		basedArmies = new List<GameObject>();
+		baseMenu = null;
 		canvas = FindObjectOfType<Canvas>();
 		room = 0;
 	}
@@ -29,6 +32,27 @@ public class BaseUI : MonoBehaviour
 	public void FormatArmiesBased()
 	{
 
+	}
+
+
+	public void OpenBaseMenu(BaseScript baseScript)
+	{
+		if(!baseMenu)
+		{
+			var newPosition = Camera.main.WorldToScreenPoint(this.transform.position + (new Vector3(Mathf.Cos(180*Mathf.Deg2Rad)*OFFSET_OF_NEW, 
+			Mathf.Sin(180*Mathf.Deg2Rad)*OFFSET_OF_NEW, 0)));
+			currentTheta = START_THETA;
+
+			baseMenu = Instantiate(baseMenuPref, newPosition, Quaternion.identity, canvas.transform);
+			baseMenu.GetComponent<Button>().onClick.AddListener(baseScript.ActivateBuildMode);
+		}
+	}
+
+
+	public void CloseBaseMenu()
+	{
+		Destroy(baseMenu.gameObject);
+		baseMenu = null;
 	}
 
 
