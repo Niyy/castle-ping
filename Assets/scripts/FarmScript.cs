@@ -5,6 +5,7 @@ using UnityEngine;
 public class FarmScript : MonoBehaviour 
 {
 	private float wood;
+	private float timeCounter;
 	private int treeCount;
 
 	
@@ -12,12 +13,18 @@ public class FarmScript : MonoBehaviour
 	{
 		wood = 0;
 		treeCount = 0;
+		timeCounter = 0;
 	}
 	
 	
 	void Update () 
 	{
-		
+		if(timeCounter <= Time.time)
+		{
+			CollectWood();
+			timeCounter = Time.time + 5;
+			Debug.Log("Resources in " + name + ": " + wood);
+		}
 	}
 
 
@@ -28,5 +35,11 @@ public class FarmScript : MonoBehaviour
 			treeCount++;
 			Debug.Log("Tree Count: " + treeCount);
 		}
+	}
+
+
+	private void CollectWood()
+	{
+		wood += treeCount;
 	}
 }

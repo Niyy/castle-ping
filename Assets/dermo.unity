@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 33612796}
   - component: {fileID: 33612800}
   m_Layer: 0
-  m_Name: Farm
+  m_Name: farm
   m_TagString: Sub-Base
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
