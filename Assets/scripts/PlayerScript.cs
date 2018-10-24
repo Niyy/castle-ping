@@ -27,7 +27,7 @@ public class PlayerScript : MonoBehaviour
 	private Vector3 positionOfBuild;
 	public bool onItem;
 	private bool startSending;
-	private float allResources;
+	public float allResources;
 	private float timeCounter;
 	private float startHold;
 
@@ -66,15 +66,15 @@ public class PlayerScript : MonoBehaviour
 		if(timeCounter <= Time.time)
 		{
 			timeCounter = Time.time + timeOffset;
-			CollectResources();	
+			//CollectResources();	
 		}
 	}
 
 
 	private void ModeCheck()
 	{
-		ActivateBuildMode();
 		MoveUnitFromBase();
+		ActivateBuildMode();
 	}
 
 
@@ -102,6 +102,8 @@ public class PlayerScript : MonoBehaviour
 				curBaseScript.SendArmy(GetMousePos());
 				curBaseScript = null;
 				startSending = false;
+
+				Debug.Log("Sending From Base.");
 			}
 			else if(currentArmyScript && Vector2.Distance(GetMousePos(), selectedItem.transform.position) > 0.21f)
 			{
@@ -109,8 +111,6 @@ public class PlayerScript : MonoBehaviour
 				currentArmyScript = null;
 				startSending = false;
 			}
-
-			Debug.Log("Base: Sending Army.");
 
 			CleanSelectedItem();
 			Destroy(armyGuide.gameObject);
@@ -120,15 +120,19 @@ public class PlayerScript : MonoBehaviour
 
 	private void ActivateBuildMode()
 	{
-		if(Input.GetMouseButtonDown(1))
+		if(Input.GetMouseButtonDown(1) && !startSending)
 		{
 			startHold = Time.time;
 		}
-		else if (Input.GetMouseButtonUp(1) && Time.time - startHold > 0.50f)
+		else if (Input.GetMouseButtonUp(1) && Time.time - startHold > 0.50f && !selectedItem)
 		{
 			positionOfBuild = GetMousePos();
 			mode = 1;
 			this.GetComponent<PlayerUI>().OpenBuildMenu(GetMousePos());
+		}
+		else if (Input.GetMouseButton(1) || Input.GetMouseButton(0))
+		{
+			this.GetComponent<PlayerUI>().CleanBuildMenu(positionOfBuild, GetMousePos());
 		}
 	}
 
@@ -261,14 +265,13 @@ public class PlayerScript : MonoBehaviour
 				currentArmyScript.SetSelected(false);
 			}
 			
-
 			selectedItem = null;
 			curBaseScript = null;
 			currentArmyScript = null;
 		}
 	}
 
-
+/*
 	private void CollectResources()
 	{
 		foreach(GameObject bases in builtBases)
@@ -278,4 +281,5 @@ public class PlayerScript : MonoBehaviour
 
 		Debug.Log("Resources: " + allResources);
 	}
+	*/
 }

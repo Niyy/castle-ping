@@ -54,11 +54,23 @@ public class PlayerUI : MonoBehaviour
 
 	public void CleanBuildMenu()
 	{
-		for(int i = 0; i < menuButtonPref.Length; i++)
+		if(baseMenu.Count > 0)
 		{
-			Destroy(baseMenu[i]);
-		}
+			for(int i = 0; i < menuButtonPref.Length; i++)
+			{
+				Destroy(baseMenu[i]);
+			}
 
-		baseMenu = new List<GameObject>();
+			baseMenu = new List<GameObject>();
+		}
+	}
+
+
+	public void CleanBuildMenu(Vector3 positionOfBuild, Vector3 mousePos)
+	{
+		if(Vector3.Distance(positionOfBuild, mousePos) >= 0.64f)
+		{
+			CleanBuildMenu();
+		}
 	}
 }

@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FarmScript : MonoBehaviour 
+public class WoodHutScript : MonoBehaviour 
 {
+	public float timeOffset;
+
+
 	private float wood;
-	private float timeCounter;
 	private int treeCount;
+	private float timeToCollect;
 
 	
 	void Start () 
 	{
 		wood = 0;
 		treeCount = 0;
-		timeCounter = 0;
+		timeToCollect = 0;
 	}
 	
 	
@@ -33,8 +36,11 @@ public class FarmScript : MonoBehaviour
 	}
 
 
-	public float CollectWood()
+	public void CollectWood()
 	{
-		return treeCount;
+		if(Time.time > timeToCollect)
+		{
+			timeToCollect = Time.time + timeOffset;
+		}
 	}
 }

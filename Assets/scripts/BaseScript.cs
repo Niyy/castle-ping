@@ -154,20 +154,6 @@ public class BaseScript : MonoBehaviour
 	}
 
 
-	public float GatherResources()
-	{
-		foreach(GameObject structure in structuresControlled)
-		{
-			woodResourceAmount = personalResources = structure.GetComponent<FarmScript>().CollectWood();
-		}
-
-		Debug.Log("Resources in " + name + ": " + personalResources);
-		Debug.Log("structures: " + structuresControlled.Count);
-
-		return woodResourceAmount;
-	}
-
-
 	private Vector3 GetMousePos()
 	{
 		Vector3 returnVec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
