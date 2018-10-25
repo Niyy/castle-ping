@@ -206,20 +206,20 @@ public class PlayerScript : MonoBehaviour
 	{
 		if((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && onItem)
 		{
-			selectedItem = itemOn;
-
-			if(selectedItem.tag.Equals("Base"))
+			if(itemOn.tag.Equals("Base") && itemOn.GetComponent<BaseScript>().GetOwner() == owner)
 			{
-				curBaseScript = selectedItem.GetComponent<BaseScript>();
+				curBaseScript = itemOn.GetComponent<BaseScript>();
 				curBaseScript.SetSelected(onItem);
 				Debug.Log("Select: Base");
 			}
-			else if(selectedItem.tag.Equals("Unit"))
+			else if(itemOn.tag.Equals("Unit") && itemOn.GetComponent<ArmyScript>().GetOwner() == owner)
 			{
-				currentArmyScript = selectedItem.GetComponent<ArmyScript>();
+				currentArmyScript = itemOn.GetComponent<ArmyScript>();
 				currentArmyScript.SetSelected(onItem);
 				Debug.Log("Select: Army");
 			}
+
+			selectedItem = itemOn;
 		}
 	}
 

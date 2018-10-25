@@ -22,7 +22,7 @@ public class PlayerUI : MonoBehaviour
 	{
 		canvas = FindObjectOfType<Canvas>();
 		baseMenu = new List<GameObject>();
-		topBarPosition = canvas.GetComponentInChildren<RectTransform>().gameObject;
+		//topBarPosition = canvas.GetComponentInChildren<RectTransform>().gameObject;
 	}
 	
 	

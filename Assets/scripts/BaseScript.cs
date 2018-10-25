@@ -42,6 +42,8 @@ public class BaseScript : MonoBehaviour
 
 		personalResources = 0;
 		timeCounter = Time.time;
+
+		this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[owner];
 	}
 	
 	

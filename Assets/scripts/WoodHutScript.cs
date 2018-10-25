@@ -7,16 +7,14 @@ public class WoodHutScript : MonoBehaviour
 	public float timeOffset;
 
 
-	private float wood;
 	private int treeCount;
 	private float timeToCollect;
+	private ResourceStructure wood;
 
 	
 	void Start () 
 	{
-		wood = 0;
-		treeCount = 0;
-		timeToCollect = 0;
+		wood = new ResourceStructure("wood", 0, 25);
 	}
 	
 	
