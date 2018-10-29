@@ -111,6 +111,10 @@ public class PlayerScript : MonoBehaviour
 				currentArmyScript = null;
 				startSending = false;
 			}
+			else
+			{
+				Debug.Log("Not your base!");
+			}
 
 			CleanSelectedItem();
 			Destroy(armyGuide.gameObject);
