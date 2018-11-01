@@ -49,7 +49,12 @@ public class BaseScript : MonoBehaviour
 	
 	void Update() 
 	{
-		
+		if(timeCounter <= Time.time)
+		{
+			timeCounter = Time.time + 4.5f;
+			personalResources += 4;
+			Debug.Log("resources: " +personalResources);
+		}
 	}
 
 
@@ -131,6 +136,11 @@ public class BaseScript : MonoBehaviour
 
 	private void ConductInteractionWithUnit(GameObject unitCollider)
 	{
+		if(!unitCollider.tag.Equals("Unit"))
+		{
+			return;
+		}
+
 		ArmyScript unitScript = unitCollider.GetComponent<ArmyScript>();
 
 		if(unitScript.GetOwner().Equals(this.owner) && unitScript.ShouldIgnore())
