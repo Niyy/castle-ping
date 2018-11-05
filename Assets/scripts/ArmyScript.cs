@@ -14,6 +14,7 @@ public class ArmyScript : MonoBehaviour
 
 	private Vector3 destination;
 	private Vector3 startLocation;
+	private ScoutScript scoutScript;
 	private bool ignore;
 	public bool canBeSelected;
 	public bool selected;
@@ -30,6 +31,14 @@ public class ArmyScript : MonoBehaviour
 		selected = canBeSelected = false;
 		speed = 2;
 		ignore = true;
+
+		scoutScript = GetComponentInChildren<ScoutScript>();
+		scoutScript.SetOwner(owner);
+
+		if(owner != 1)
+		{
+			this.GetComponent<SpriteRenderer>().enabled = false;
+		}
 	}
 	
 	
@@ -81,21 +90,6 @@ public class ArmyScript : MonoBehaviour
 	public void MoveArmy()
 	{
 		transform.position = Vector3.MoveTowards(this.transform.position, destination, speed * Time.deltaTime);
-	}
-
-
-	public void OnTriggerEnter2D(Collider2D col)
-	{
-		if(col.tag.Equals(UNIT))
-		{
-			
-		}
-	}
-
-
-	public void OnTriggerExit2D(Collider2D col)
-	{
-		
 	}
 
 

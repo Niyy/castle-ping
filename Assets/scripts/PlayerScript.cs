@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Owner 0 is neutral. Owner 1 is local player. If you play online other players who connect will
+// fill in your game as different owners.
+
 public class PlayerScript : MonoBehaviour 
 {
 	public GameObject blobPref;
