@@ -8,7 +8,14 @@ public class ScoutScript : MonoBehaviour
 
 
 	private List<GameObject> enemiesInView;
+	private PlayerScript playerScript;
 	public int owner;
+
+
+	public void Start()
+	{
+		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+	}
 
 
 	void OnTriggerEnter2D(Collider2D coll)
@@ -19,8 +26,7 @@ public class ScoutScript : MonoBehaviour
 
 			if(!enemyInfo.GetOwner().Equals(this.owner))
 			{
-				coll.GetComponent<SpriteRenderer>().enabled = true;
-				Debug.Log("Unit Entering.");
+				playerScript.AddEnemyInView(coll.gameObject);
 			}
 		}
 
@@ -36,9 +42,7 @@ public class ScoutScript : MonoBehaviour
 
 			if(!enemyInfo.GetOwner().Equals(this.owner) && this.owner == 1)
 			{
-				coll.GetComponent<SpriteRenderer>().enabled = false;
-				//coll.GetComponent<SpriteRenderer>().color.a = 
-				Debug.Log("Unit leaving.");
+				playerScript.RemoveEnemyInView(coll.gameObject);
 			}
 		}
 

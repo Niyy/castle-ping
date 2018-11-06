@@ -16,28 +16,32 @@ public class PlayerScript : MonoBehaviour
 
 
 	private GameObject lastDropped;
-	private List<GameObject> builtBases;
-	private int mode;
-	private float timeModeChanged;
-	private Canvas canvas;
-	private int mouseState;
-	private float maxDis;
-	private GameObject armyGuide;
-	private BaseScript curBaseScript;
-	private ArmyScript currentArmyScript;
 	private GameObject selectedItem;
 	private GameObject itemOn;
+	private GameObject armyGuide;
+
+	private List<GameObject> builtBases;
+	private BaseScript curBaseScript;
+	private ArmyScript currentArmyScript;
 	private Vector3 positionOfBuild;
-	public bool onItem;
-	private bool startSending;
+	private RelatorVector relatorVector;
+	private Canvas canvas;
+
+	private float timeModeChanged;
+	private float maxDis;
 	public float allResources;
 	private float timeCounter;
 	private float startHold;
+	public bool onItem;
+	private bool startSending;
+	private int mouseState;
+	private int mode;
 
 	
 	void Start () 
 	{
 		builtBases = new List<GameObject>();
+		relatorVector = new RelatorVector();
 		canvas = GameObject.FindObjectOfType<Canvas>();
 		mode = 0;
 		onItem = false;
@@ -51,7 +55,7 @@ public class PlayerScript : MonoBehaviour
 
 		foreach(GameObject bases in GameObject.FindGameObjectsWithTag("Base"))
 		{
-			if(bases.GetComponent<BaseScript>().GetOwner().Equals(owner))
+			if(bases && bases.GetComponent<BaseScript>().GetOwner().Equals(owner))
 				builtBases.Add(bases);
 		}
 	}
@@ -276,6 +280,18 @@ public class PlayerScript : MonoBehaviour
 			curBaseScript = null;
 			currentArmyScript = null;
 		}
+	}
+
+
+	public void AddEnemyInView(GameObject enemy)
+	{
+		relatorVector.AddEnemyInSight(enemy);
+	}
+
+
+	public void RemoveEnemyInView(GameObject enemy)
+	{
+		relatorVector.RemoveEnemyInSight(enemy);
 	}
 
 /*

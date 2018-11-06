@@ -32,7 +32,7 @@ public class ArmyScript : MonoBehaviour
 		speed = 2;
 		ignore = true;
 
-		scoutScript = GetComponentInChildren<ScoutScript>();
+		scoutScript = this.transform.parent.GetComponentInChildren<ScoutScript>();
 		scoutScript.SetOwner(owner);
 
 		if(owner != 1)
@@ -89,7 +89,7 @@ public class ArmyScript : MonoBehaviour
 
 	public void MoveArmy()
 	{
-		transform.position = Vector3.MoveTowards(this.transform.position, destination, speed * Time.deltaTime);
+		transform.position = this.transform.parent.position = Vector3.MoveTowards(this.transform.position, destination, speed * Time.deltaTime);
 	}
 
 

@@ -20,6 +20,7 @@ public class BaseScript : MonoBehaviour
 
 	private LineRenderer lineRend;
 	private BaseUI baseUI;
+	private ScoutScript scoutScript;
 	private List<GameObject> armiesOut;
 	private List<GameObject> structuresControlled;
 	private float personalResources;
@@ -44,6 +45,14 @@ public class BaseScript : MonoBehaviour
 		timeCounter = Time.time;
 
 		this.GetComponent<SpriteRenderer>().sprite = territoryPrefabs[owner];
+
+		scoutScript = this.transform.parent.GetComponentInChildren<ScoutScript>();
+		scoutScript.SetOwner(owner);
+
+		if(owner != 1)
+		{
+			this.GetComponent<SpriteRenderer>().enabled = false;
+		}
 	}
 	
 	
@@ -95,8 +104,8 @@ public class BaseScript : MonoBehaviour
 			baseUI.RemoveItem();
 
 			armiesOut.Add(Instantiate(armyPref, this.transform.position, Quaternion.identity));
-			var setUnit = armiesOut[armiesOut.Count - 1].GetComponent<ArmyScript>();
-			setUnit.name = owner + "0" + (armiesOut.Count - 1).ToString();
+			var setUnit = armiesOut[armiesOut.Count - 1].GetComponentInChildren<ArmyScript>();
+			armiesOut[armiesOut.Count - 1].name = owner + "-" + "army " + (armiesOut.Count - 1).ToString();
 			setUnit.SetArmyDestination(movePosition, this.transform.position);
 			setUnit.SetOwner(this.owner);
 			setUnit.SetIgnorance(true);
@@ -104,8 +113,8 @@ public class BaseScript : MonoBehaviour
 		else if(personalResources > 25)
 		{
 			armiesOut.Add(Instantiate(armyPref, this.transform.position, Quaternion.identity));
-			var setUnit = armiesOut[armiesOut.Count - 1].GetComponent<ArmyScript>();
-			setUnit.name = owner + "0" + (armiesOut.Count - 1).ToString();
+			var setUnit = armiesOut[armiesOut.Count - 1].GetComponentInChildren<ArmyScript>();
+			armiesOut[armiesOut.Count - 1].name = owner + "-" + "army " + (armiesOut.Count - 1).ToString();
 			setUnit.SetArmyDestination(movePosition, this.transform.position);
 			setUnit.SetOwner(this.owner);
 			setUnit.SetIgnorance(true);
@@ -121,6 +130,8 @@ public class BaseScript : MonoBehaviour
 		{
 			ConductInteractionWithUnit(col.gameObject);
 		}
+
+		Debug.Log("I am confused.");
 	}
 
 	public void OnTriggerExit2D(Collider2D col)
@@ -137,7 +148,7 @@ public class BaseScript : MonoBehaviour
 		{
 			baseUI.AddArmyBased(unitCollider);
 
-			Destroy(unitCollider);
+			Destroy(unitCollider.transform.parent.gameObject);
 		}
 		else if(!unitScript.GetOwner().Equals(this.owner))
 		{
