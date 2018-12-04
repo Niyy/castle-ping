@@ -8,6 +8,7 @@ public class ArmyScript : MonoBehaviour
 	const string UNIT = "Unit";
 
 
+	public Sprite[] spriteHolder;
 	public float speed = 2f;
 	public int owner;
 
@@ -39,6 +40,8 @@ public class ArmyScript : MonoBehaviour
 		{
 			this.GetComponent<SpriteRenderer>().enabled = false;
 		}
+
+		this.GetComponent<SpriteRenderer>().sprite = spriteHolder[owner]; 
 	}
 	
 	
@@ -60,19 +63,16 @@ public class ArmyScript : MonoBehaviour
 		}
 	}
 
-/*
-	private void SelectUnit()
+
+	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if(canBeSelected && Input.GetMouseButtonDown(0))
+		if(col.gameObject.tag.Equals("Unit") && col.gameObject.GetComponent<ArmyScript>().owner != owner)
 		{
-			selected = true;
-		}
-		else if(Input.GetMouseButtonDown(0))
-		{
-			selected = false;
+			Debug.Log("Collided with enemy");
+			destination = this.transform.position;
 		}
 	}
-*/
+	
 
 	public void SetArmyDestination(Vector3 newDes)
 	{

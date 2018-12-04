@@ -208,6 +208,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4128549456913944, guid: 58ebca83f6fc04f4e8b8389112625ead, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.65
@@ -254,6 +259,24 @@ Prefab:
       propertyPath: owner
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1a84508c06726a440a03a262cb0a1f80,
+        type: 3}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 03f0e6115ec79a6448ccab5c2ac82fb9,
+        type: 3}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e2387f38fba65c4a8f74d7ea9a21833,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 58ebca83f6fc04f4e8b8389112625ead, type: 2}
   m_IsPrefabParent: 0
@@ -326,6 +349,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4128549456913944, guid: 58ebca83f6fc04f4e8b8389112625ead, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.65
@@ -362,6 +390,24 @@ Prefab:
       propertyPath: m_Name
       value: army top (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1a84508c06726a440a03a262cb0a1f80,
+        type: 3}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 03f0e6115ec79a6448ccab5c2ac82fb9,
+        type: 3}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e2387f38fba65c4a8f74d7ea9a21833,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 58ebca83f6fc04f4e8b8389112625ead, type: 2}
   m_IsPrefabParent: 0
@@ -372,6 +418,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4128549456913944, guid: 58ebca83f6fc04f4e8b8389112625ead, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -404,6 +455,24 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1a84508c06726a440a03a262cb0a1f80,
+        type: 3}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 03f0e6115ec79a6448ccab5c2ac82fb9,
+        type: 3}
+    - target: {fileID: 114372344349434538, guid: 58ebca83f6fc04f4e8b8389112625ead,
+        type: 2}
+      propertyPath: spriteHolder.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e2387f38fba65c4a8f74d7ea9a21833,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 58ebca83f6fc04f4e8b8389112625ead, type: 2}
   m_IsPrefabParent: 0
