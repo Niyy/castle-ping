@@ -11,14 +11,19 @@ public class ArmyScript : MonoBehaviour
 	public Sprite[] spriteHolder;
 	public float speed = 2f;
 	public int owner;
+	public int health;
+	public int damage;
+	public int defense;
 
 
 	private Vector3 destination;
 	private Vector3 startLocation;
 	private ScoutScript scoutScript;
+	private GameObject enemyEngaged;
 	private bool ignore;
-	public bool canBeSelected;
-	public bool selected;
+	private bool canBeSelected;
+	private bool selected;
+	private float hitRate;
 
 
 	void Awake()
@@ -32,6 +37,8 @@ public class ArmyScript : MonoBehaviour
 		selected = canBeSelected = false;
 		speed = 2;
 		ignore = true;
+		enemyEngaged = null;
+		hitRate = 0;
 
 		scoutScript = this.transform.parent.GetComponentInChildren<ScoutScript>();
 		scoutScript.SetOwner(owner);
@@ -61,6 +68,13 @@ public class ArmyScript : MonoBehaviour
 		{
 			ignore = false;
 		}
+
+		if(enemyEngaged && hitRate < Time.time)
+		{
+			Debug.Log("Hit declared.");
+			this.DealDamage();
+			hitRate = Time.time + 5;
+		}
 	}
 
 
@@ -70,6 +84,8 @@ public class ArmyScript : MonoBehaviour
 		{
 			Debug.Log("Collided with enemy");
 			destination = this.transform.position;
+
+			enemyEngaged = col.gameObject;
 		}
 	}
 	
@@ -90,6 +106,33 @@ public class ArmyScript : MonoBehaviour
 	public void MoveArmy()
 	{
 		transform.position = this.transform.parent.position = Vector3.MoveTowards(this.transform.position, destination, speed * Time.deltaTime);
+	}
+
+
+	//Combat
+	public void DealDamage()
+	{
+		enemyEngaged.GetComponent<ArmyScript>().TakeDamage(Random.Range(0, damage));
+	}
+
+
+	public void TakeDamage(int damageTaken)
+	{
+		int damage = damageTaken - Random.Range(0, defense);
+		health -= damage;
+		Debug.Log("Argh. I got hit for " + damage);
+
+		if(health <= 0)
+		{
+			enemyEngaged.GetComponent<ArmyScript>().TakeDamage(Random.Range(0, damage));
+			DestroyImmediate(this.gameObject);
+		}
+	}
+
+
+	public void EndCombat()
+	{
+		enemyEngaged = null;
 	}
 
 
