@@ -79,7 +79,6 @@ public class PlayerScript : MonoBehaviour
     }
 
 
-    /*
     private void MoveUnitFromBase()
     {
         if (Input.GetMouseButton(1))
@@ -122,7 +121,7 @@ public class PlayerScript : MonoBehaviour
             Destroy(armyGuide.gameObject);
         }
     }
-	*/
+	
 
 
     private void MoveUnit()
