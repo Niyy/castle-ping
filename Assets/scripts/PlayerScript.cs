@@ -23,7 +23,6 @@ public class PlayerScript : MonoBehaviour
     private List<GameObject> builtBases;
     private BaseScript curBaseScript;
     private ArmyScript currentArmyScript;
-    private UnitScript currentUnitScript;
     private Vector3 positionOfBuild;
     private RelatorVector relatorVector;
     private Canvas canvas;
@@ -67,7 +66,7 @@ public class PlayerScript : MonoBehaviour
         MovePlayerWithMouse();
 
         SelectItemPlayerOn();
-        MoveUnit();
+        MoveUnitFromBase();
 
         CleanSelectedItem();
 
@@ -119,16 +118,6 @@ public class PlayerScript : MonoBehaviour
 
             CleanSelectedItem();
             Destroy(armyGuide.gameObject);
-        }
-    }
-	
-
-
-    private void MoveUnit()
-    {
-        if (Input.GetMouseButtonDown(1) && currentUnitScript)
-        {
-            currentUnitScript.SetNewDestination(GetMousePos());
         }
     }
 
@@ -219,7 +208,7 @@ public class PlayerScript : MonoBehaviour
 
     private void SelectItemPlayerOn()
     {
-        if (Input.GetMouseButtonDown(0) && onItem)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && onItem)
         {
             if (itemOn.tag.Equals("Base") && itemOn.GetComponent<BaseScript>().GetOwner() == owner)
             {
@@ -227,17 +216,11 @@ public class PlayerScript : MonoBehaviour
                 curBaseScript.SetSelected(onItem);
                 Debug.Log("Player Select: Base");
             }
-            else if (itemOn.tag.Equals("Army") && itemOn.GetComponent<ArmyScript>().GetOwner() == owner)
+            else if (itemOn.tag.Equals("Unit") && itemOn.GetComponent<ArmyScript>().GetOwner() == owner)
             {
                 currentArmyScript = itemOn.GetComponent<ArmyScript>();
                 currentArmyScript.SetSelected(onItem);
-                Debug.Log("Player Select: Army");
-            }
-            else if (itemOn.tag.Equals("Unit") && itemOn.GetComponent<UnitScript>().GetOwner() == owner)
-            {
-                currentUnitScript = itemOn.GetComponent<UnitScript>();
-                currentUnitScript.SetSelected(onItem);
-                Debug.Log("Player Selects: Unit");
+                Debug.Log("Player Select: Unit");
             }
 
             selectedItem = itemOn;
@@ -289,7 +272,6 @@ public class PlayerScript : MonoBehaviour
             selectedItem = null;
             curBaseScript = null;
             currentArmyScript = null;
-            currentUnitScript = null;
         }
     }
 
